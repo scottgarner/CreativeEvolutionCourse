@@ -231,9 +231,10 @@ static void mutateFunc(int* ioBoard, const size_t& iTileCount, const float& iMut
         }
     }
     
-    if (meteor && rand()%1000000 != 0) {
+    if (meteor && rand()%1000000 != 0)
+    {
         for(int i = 0; i < iTileCount; i++) {
-            ioBoard[i] = randomInt( getTileValueMin(), getTileValueMax() + 1 );
+            ioBoard[i] = (rand()%9) +1;
         }
     }
     

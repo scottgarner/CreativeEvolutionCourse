@@ -203,7 +203,7 @@ public:
 				// Create a new population:
 				for(int i = 0; i < mPopulationSize; i++) {
 					tPopulation[ i ] = new DataType[ mGeneCount ];
-					mCrossoverFunction( tPool.at( randomInt( 0, tPoolSize ) ), tPool.at( randomInt( 0, tPoolSize ) ), tPopulation[ i ], mGeneCount );
+					mCrossoverFunction( tPool.at(rand()%tPoolSize) , tPool.at(rand()%tPoolSize), tPopulation[ i ], mGeneCount );
 					mMutationFunction( tPopulation[ i ], mGeneCount, mMutationRate, mGenerationIter);
 				}
 				// Delete previous population:
