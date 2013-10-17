@@ -35,7 +35,7 @@ public:
 	typedef std::function<void(DataType*, const size_t&)>										InitializeFunction;
 	typedef std::function<float(const DataType*, const size_t&)>								FitnessFunction;
 	typedef std::function<void(const DataType*, const DataType*, DataType*, const size_t&)>		CrossoverFunction;
-	typedef std::function<void(DataType*, const size_t&, const float&)>							MutationFunction;
+	typedef std::function<void(DataType*, const size_t&, const float&, const float&)>			MutationFunction;
 	typedef std::function<void(DataType*, const size_t&)>										PrintFunction;
 	
 protected:
@@ -173,6 +173,7 @@ public:
 				}
 			}
 			// Check whether best individual is complete:
+            if (mGenerationIter % 100 == 0) std::cout << mGenerationIter << " Best: " << tBestScore << std::endl;            
 			if( getBoardWin( mPopulation[ tBestIdx ], mGeneCount ) ) {
 				// Copy win state:
 				mWinState = new DataType[ mGeneCount ];
@@ -203,7 +204,7 @@ public:
 				for(int i = 0; i < mPopulationSize; i++) {
 					tPopulation[ i ] = new DataType[ mGeneCount ];
 					mCrossoverFunction( tPool.at( randomInt( 0, tPoolSize ) ), tPool.at( randomInt( 0, tPoolSize ) ), tPopulation[ i ], mGeneCount );
-					mMutationFunction( tPopulation[ i ], mGeneCount, mMutationRate );
+					mMutationFunction( tPopulation[ i ], mGeneCount, mMutationRate, mGenerationIter);
 				}
 				// Delete previous population:
 				for(int i = 0; i < mPopulationSize; i++) {
