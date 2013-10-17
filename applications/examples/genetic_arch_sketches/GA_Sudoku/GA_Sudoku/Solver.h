@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Constants.h"
+#include <numeric>
 
 /**
  * THE CONTENTS OF THIS FILE SHOULD BE EDITED TO PRODUCE A WINNING SUDOKU SOLVER...
@@ -18,7 +19,7 @@
 #pragma mark - TEAM_PARAMS
 
 static const std::string	kAuthorTeam		= "The Sword of God";
-static const float			kMutationRate	= .475;
+static const float			kMutationRate	= .618;
 
 #pragma mark -
 #pragma mark - TEAM_FUNCTIONS
@@ -58,7 +59,7 @@ static const int box_map[] = {
     60,61,62,69,70,71,78,79,80
 };
 
-static const int epoch = 250;
+static const int epoch = 256;
 static const int eon = epoch * 10;
 std::vector<int> gridTracker(27,0);
 
@@ -76,15 +77,13 @@ static float fitnessFunc(const int* iBoard, const size_t& iTileCount)
             
             size_t mapIndex = j + (i * getTileAxis());
             
-            gridTracker[iBoard[row_map[mapIndex]]-1] ++;
-            gridTracker[iBoard[column_map[mapIndex]]-1 + 9] ++;
-            gridTracker[iBoard[box_map[mapIndex]]-1 + 18] ++;
+            gridTracker[iBoard[row_map[mapIndex]]-1] =
+            gridTracker[iBoard[column_map[mapIndex]]-1 + 9] =
+            gridTracker[iBoard[box_map[mapIndex]]-1 + 18] = 1;
             
         }
         
-        for (int j = 0; j < getTileAxis() * 3; j++) {
-            score += (gridTracker[j] > 0) ? 1 : 0;
-        }
+        score += std::accumulate(gridTracker.rbegin(), gridTracker.rend(), 0);
         
     }
     
