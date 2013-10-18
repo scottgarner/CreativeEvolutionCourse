@@ -74,18 +74,6 @@ static const float			kMutationRate	= .618;
 #pragma mark -
 #pragma mark - TEAM_FUNCTIONS
 
-
-static const int row_map[] = {
-    0, 1, 2, 3, 4, 5, 6, 7, 8,
-    9,10,11,12,13,14,15,16,17,
-    18,19,20,21,22,23,24,25,26,
-    27,28,29,30,31,32,33,34,35,
-    36,37,38,39,40,41,42,43,44,
-    45,46,47,48,49,50,51,52,53,
-    54,55,56,57,58,59,60,61,62,
-    63,64,65,66,67,68,69,70,71,
-    72,73,74,75,76,77,78,79,80
-};
 static const int column_map[] = {
     0, 9,18,27,36,45,54,63,72,
     1,10,19,28,37,46,55,64,73,
@@ -129,7 +117,7 @@ static float fitnessFunc(const int* iBoard, const size_t& iTileCount)
             
             size_t mapIndex = j + (i * getTileAxis());
             
-            gridTracker[iBoard[row_map[mapIndex]]-1] =
+            gridTracker[iBoard[mapIndex]-1] =
             gridTracker[iBoard[column_map[mapIndex]]-1 + 9] =
             gridTracker[iBoard[box_map[mapIndex]]-1 + 18] = 1;
             
@@ -222,10 +210,6 @@ static void mutateFunc(int* ioBoard, const size_t& iTileCount, const float& iMut
             int swapIndex2 = (rand()%9) + (i * getTileAxis());
             
             switch(mutationType) {
-                case 0:
-                    swapIndex1 = row_map[swapIndex1];
-                    swapIndex2 = row_map[swapIndex2];
-                    break;
                 case 1:
                     swapIndex1 = column_map[swapIndex1];
                     swapIndex2 = column_map[swapIndex2];
@@ -251,18 +235,14 @@ static void mutateFunc(int* ioBoard, const size_t& iTileCount, const float& iMut
         
         for (int j = 0; j < getTileAxis(); j++) {
             
-            int mutateIndex;
-            int mapIndex = j + (i * getTileAxis());
+            int mutateIndex = j + (i * getTileAxis());
             
             switch(mutateType) {
-                case 0:
-                    mutateIndex = row_map[mapIndex];
-                    break;
                 case 1:
-                    mutateIndex = column_map[mapIndex];
+                    mutateIndex = column_map[mutateIndex];
                     break;
                 case 2:
-                    mutateIndex = box_map[mapIndex];
+                    mutateIndex = box_map[mutateIndex];
                     break;
             }
             
@@ -280,7 +260,7 @@ static void mutateFunc(int* ioBoard, const size_t& iTileCount, const float& iMut
         }
     }
     
-    if (meteor && rand()%1000000 != 0)
+    if (meteor && rand()%1000 != 0)
     {
         for(int i = 0; i < iTileCount; i++) {
             ioBoard[i] = (rand()%9) +1;
