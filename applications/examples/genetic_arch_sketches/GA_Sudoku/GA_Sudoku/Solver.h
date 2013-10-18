@@ -69,10 +69,12 @@ static float fitnessFunc(const int* iBoard, const size_t& iTileCount)
 	
     size_t score = 0;
     
+    // Operons
     for (int i = 0; i < getTileAxis(); i++) {
         
         memset(&gridTracker[0], 0, gridTracker.size() * sizeof gridTracker[0]);
         
+        // Genes
         for (int j = 0; j < getTileAxis(); j++) {
             
             size_t mapIndex = j + (i * getTileAxis());
@@ -193,9 +195,6 @@ static void mutateFunc(int* ioBoard, const size_t& iTileCount, const float& iMut
     
     if (xmen && rand()%2) {
         
-        std::vector<int> numbers = {1,2,3,4,5,6,7,8,9};
-        std::random_shuffle(numbers.begin(), numbers.end());
-        
         int i = rand()%9;
         
         int mutateType = rand()%3;
@@ -217,7 +216,7 @@ static void mutateFunc(int* ioBoard, const size_t& iTileCount, const float& iMut
                     break;
             }
             
-            ioBoard[mutateIndex] = numbers[j];
+            ioBoard[mutateIndex] = (rand()%9) +1;
             
         }
     }
