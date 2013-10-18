@@ -46,6 +46,7 @@ protected:
 	PrintFunction			mPrintFunction;
 	
 	DataType**				mPopulation;
+    DataType**				mTempPopulation;
 	size_t					mPopulationSize;
 	size_t					mGeneCount;
 	size_t					mGenerationIter;
@@ -87,6 +88,13 @@ public:
 			}
 			delete [] mPopulation;
 			mPopulation = NULL;
+		}
+		if( mTempPopulation ) {
+			for(int i = 0; i < mPopulationSize; i++) {
+				delete [] mTempPopulation[ i ];
+			}
+			delete [] mTempPopulation;
+			mTempPopulation = NULL;
 		}
 		// Delete win state:
 		if( mWinState ) {
@@ -140,14 +148,17 @@ public:
 	 */
 	void initialize()
 	{
-		if( mInitializeFunction ) {
+		//if( mInitializeFunction ) {
 			// Initialize population:
 			mPopulation = new DataType*[ mPopulationSize ];
+            mTempPopulation = new DataType*[ mPopulationSize ];
 			for(int i = 0; i < mPopulationSize; i++) {
 				mPopulation[ i ] = new DataType[ mGeneCount ];
+                mTempPopulation[ i ] = new DataType[ mGeneCount ];
 				mInitializeFunction( mPopulation[ i ], mGeneCount );
+                //mInitializeFunction( mTempPopulation[ i ], mGeneCount );
 			}
-		}
+		//}
 	}
 	
 	/**
@@ -155,7 +166,7 @@ public:
 	 */
 	void runGeneration()
 	{
-		if( mFitnessFunction ) {
+		//if( mFitnessFunction ) {
 			// Prepare scoring variables:
 			float  tScores[ mPopulationSize ];
 			size_t tBestIdx    = 0;
@@ -173,7 +184,7 @@ public:
 				}
 			}
 			// Check whether best individual is complete:
-            if (mGenerationIter % 100 == 0) std::cout << mGenerationIter << " Best: " << tBestScore << std::endl;            
+            if (mGenerationIter % 500 == 0) std::cout << mGenerationIter << " Best: " << tBestScore << std::endl;
 			if( getBoardWin( mPopulation[ tBestIdx ], mGeneCount ) ) {
 				// Copy win state:
 				mWinState = new DataType[ mGeneCount ];
@@ -182,7 +193,8 @@ public:
 				mRunning = false;
 			}
 			// Handle mating:
-			else if( mCrossoverFunction && mMutationFunction ) {
+			//else if( mCrossoverFunction && mMutationFunction ) {
+            else {
 				std::vector<DataType*> tPool;
 				// Add individuals to pool:
 				for(int i = 0; i < mPopulationSize; i++) {
@@ -199,25 +211,22 @@ public:
 					return;
 				}
 				// Initialize new population:
-				DataType** tPopulation = new DataType*[ mPopulationSize ];
+				//DataType** tPopulation = new DataType*[ mPopulationSize ];
 				// Create a new population:
 				for(int i = 0; i < mPopulationSize; i++) {
-					tPopulation[ i ] = new DataType[ mGeneCount ];
-					mCrossoverFunction( tPool.at(rand()%tPoolSize) , tPool.at(rand()%tPoolSize), tPopulation[ i ], mGeneCount );
-					mMutationFunction( tPopulation[ i ], mGeneCount, mMutationRate, mGenerationIter);
+					//tPopulation[ i ] = new DataType[ mGeneCount ];
+					mCrossoverFunction( tPool.at(rand()%tPoolSize) , tPool.at(rand()%tPoolSize), mTempPopulation[ i ], mGeneCount );
+					mMutationFunction( mTempPopulation[ i ], mGeneCount, mMutationRate, mGenerationIter);
 				}
-				// Delete previous population:
-				for(int i = 0; i < mPopulationSize; i++) {
-					delete [] mPopulation[ i ];
-				}
-				delete [] mPopulation;
-				mPopulation = NULL;
-				// Set new population:
-				mPopulation = tPopulation;
+				// Swap population buffers
+                DataType** swapPopulation = mPopulation;
+                mPopulation = mTempPopulation;
+                mTempPopulation = swapPopulation;
+                
 				// Advance generation iter:
 				mGenerationIter++;
 			}
-		}
+		//}
 	}
 	
 	/**

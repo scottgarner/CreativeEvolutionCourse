@@ -11,9 +11,59 @@
 #include "Constants.h"
 #include <numeric>
 
-/**
- * THE CONTENTS OF THIS FILE SHOULD BE EDITED TO PRODUCE A WINNING SUDOKU SOLVER...
- */
+/*
+
+ THE SWORD OF GOD
+
+ My solver works based on two principles:
+ 
+ 1) My population wants to converge as quickly as possible no matter what
+ 2) My population is subject to the whims of a jealous and vengeful god
+ 
+ Super fast convergence makes spinning out at a local maximum a common occurance.
+ In other words, the population reaches a point at which it thinks it is perfect
+ even though it isn't. This hubris angers the god and the population is punished
+ with increasing severity.
+ 
+ I'm pretty clumsy with C++, so my optimizations may all be insane.
+ 
+ 
+ Population.h
+ 
+ 1) I got rid of all sanity checks
+ 2) I modified the mutation function to take the generation count
+ 3) I replaced helper functions with "rawer" code
+ 4) I swap between two population buffers instead of allocating/deleting every time
+ 
+ Solver.h
+ 
+ 1) Try to loop as rarely as possible
+ 2) Blunt and fast is better than elegant and slow
+ 3) Mutate often, but subtlety
+ 
+ fitnessFunc()
+ 
+ 1) Use a set of maps to nagivate the three opteron types (row,column,box)
+ 1) Loop through all three opteron types simultaneously
+ 2) Score all 27 opterons into a single vector
+ 3) Accumulate the contents of that vector into a single score
+ 
+ crossoverFunc()
+ 
+ 1) std:copy the first board directly to he output board
+ 2) Loop through the row count (9)
+ 3) Half the time, std:copy the current row from the second board
+ 
+ mutateFunc()
+ 
+ 1) Randomly chose an opteron
+ 2) Swap two values within it
+ 3) Every epoc, nuclear fallout increases the mutation rate to 1.0
+ 4) Every three epocs, gamma rays scramble an opteron in half the population
+ 5) Every six epocs, 80% of the population has 12.5% of their genes scrambled
+ 6) Every eon, a meteorite kills virtually all life on earth and evolution begins anew
+ 
+*/
 
 #pragma mark -
 #pragma mark - TEAM_PARAMS
