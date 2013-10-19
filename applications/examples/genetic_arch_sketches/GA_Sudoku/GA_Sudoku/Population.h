@@ -35,7 +35,7 @@ public:
 	typedef std::function<void(DataType*, const size_t&)>										InitializeFunction;
 	typedef std::function<float(const DataType*, const size_t&)>								FitnessFunction;
 	typedef std::function<void(const DataType*, const DataType*, DataType*, const size_t&)>		CrossoverFunction;
-	typedef std::function<void(DataType*, const size_t&, const float&, const float&)>			MutationFunction;
+	typedef std::function<void(DataType*, const size_t&, const float&, const size_t&)>			MutationFunction;
 	typedef std::function<void(DataType*, const size_t&)>										PrintFunction;
 	
 protected:
@@ -219,9 +219,7 @@ public:
 					mMutationFunction( mTempPopulation[ i ], mGeneCount, mMutationRate, mGenerationIter);
 				}
 				// Swap population buffers
-                DataType** swapPopulation = mPopulation;
-                mPopulation = mTempPopulation;
-                mTempPopulation = swapPopulation;
+                std::swap(mPopulation,mTempPopulation);
                 
 				// Advance generation iter:
 				mGenerationIter++;
