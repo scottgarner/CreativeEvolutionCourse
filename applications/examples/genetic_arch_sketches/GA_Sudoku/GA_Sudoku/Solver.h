@@ -21,10 +21,7 @@
 
  THE SWORD OF GOD
 
- My solver works based on two principles:
- 
- 1) My population wants to converge as quickly as possible no matter what
- 2) My population is subject to the whims of a jealous and vengeful god
+ My population is subject to the whims of a jealous and vengeful god
  
  Super fast convergence makes spinning out at a local maximum a common occurance.
  In other words, the population reaches a point at which it thinks it is perfect
