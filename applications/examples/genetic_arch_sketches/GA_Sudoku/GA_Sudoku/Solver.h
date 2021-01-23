@@ -61,9 +61,9 @@
  
  1) Randomly chose an operon
  2) Swap two values within it
- 3) Every epoc, nuclear fallout increases the mutation rate to 1.0
- 4) Every three epocs, gamma rays scramble an operon in half the population
- 5) Every six epocs, 80% of the population has 12.5% of their genes scrambled
+ 3) Every epoch, nuclear fallout increases the mutation rate to 1.0
+ 4) Every three epochs, gamma rays scramble an operon in half the population
+ 5) Every six epochs, 80% of the population has 12.5% of their genes scrambled
  6) Every eon, a meteorite kills virtually all life on earth and evolution begins anew
  
 */
