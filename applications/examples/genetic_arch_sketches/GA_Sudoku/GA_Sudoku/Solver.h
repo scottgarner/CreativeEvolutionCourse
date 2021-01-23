@@ -23,7 +23,7 @@
 
  My population is subject to the whims of a jealous and vengeful god
  
- Super fast convergence makes spinning out at a local maximum a common occurance.
+ Super fast convergence makes spinning out at a local maximum a common occurrence.
  In other words, the population reaches a point at which it thinks it is perfect
  even though it isn't. This hubris angers the god and the population is punished
  with increasing severity.
@@ -46,9 +46,9 @@
  
  fitnessFunc()
  
- 1) Use a set of maps to nagivate the three opteron types (row,column,box)
- 1) Loop through all three opteron types simultaneously
- 2) Score all 27 opterons into a single bitset
+ 1) Use a set of maps to nagivate the three operon types (row,column,box)
+ 1) Loop through all three operon types simultaneously
+ 2) Score all 27 \s into a single bitset
  3) Accumulate the contents of that bitset into a single score
  
  crossoverFunc()
@@ -59,10 +59,10 @@
  
  mutateFunc()
  
- 1) Randomly chose an opteron
+ 1) Randomly chose an operon
  2) Swap two values within it
  3) Every epoc, nuclear fallout increases the mutation rate to 1.0
- 4) Every three epocs, gamma rays scramble an opteron in half the population
+ 4) Every three epocs, gamma rays scramble an operon in half the population
  5) Every six epocs, 80% of the population has 12.5% of their genes scrambled
  6) Every eon, a meteorite kills virtually all life on earth and evolution begins anew
  
